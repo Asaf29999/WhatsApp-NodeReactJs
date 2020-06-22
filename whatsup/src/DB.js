@@ -36,19 +36,27 @@ var userSchema = new mongoose.Schema({
   lastName: String,
   email: String,
   password: String,
-  contacts: Array
+  Groups: [groupModel]
 });
 
-// var ClubSchema = new mongoose.Schema({
-//   name: String,
-//   location: String,
-//   type: String,
-//   men: [ManSchema],
-//   women: [womanSchema]
-// });
+var messageSchema = new mongoose.Schema({
+  Content: String,
+  Sender: userModel,
+  Receiver: [groupModel],
+  status: String,
+});
+
+var groupSchema = new mongoose.Schema({
+  Name: String,
+  Description: String,
+  Participants: [userModel],
+  Messages: [messageModel],
+});
+
 
 const userModel = mongoose.model('User', userSchema);
-//const ClubModel = mongoose.model('Club', ClubSchema);
+const messageModel = mongoose.model('Message', messageSchema);
+const groupModel = mongoose.model('Group', groupSchema);
 
 
 
