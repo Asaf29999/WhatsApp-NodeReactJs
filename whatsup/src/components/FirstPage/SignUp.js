@@ -37,21 +37,18 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'stretch',
     marginTop: theme.spacing(-16),
 
-
   },
   Text: {
     color: '#009688',
     fontFamily: 'Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;',
+  },
+  background: {
+    minWidth: '100vw',
+    minhHeight: '100vh',
+    backgroundColor: '#D7DBD7'
   }
 
 }));
-
-
-
-
-
-
-
 
 
 const SignUp = () => {
@@ -63,85 +60,35 @@ const SignUp = () => {
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Access-Control-Allow-Origin", "*");
 
-    var raw = JSON.stringify({ "firstName": "Asafi", "lastName": "Iluz", "email": "asaf29999@gmail.com", "password": "lkjklhg876" });
+    // var raw = JSON.stringify({ "firstName": "Asafi", "lastName": "Iluz", "email": "asaf29999@gmail.com", "password": "lkjklhg876" });
+
+    let x = document.getElementById('form');
+    const user = JSON.stringify(formJson(x));
+
+    console.log(user);
 
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: raw,
+      body: user,
       redirect: 'follow',
-      mode: 'no-cors',
     };
 
     fetch("http://localhost:3001/user", requestOptions)
       .then(response => {
-        swal("You have successfully registered!","", "success");
-        response.text()})
+        swal("You have successfully registered!", "", "success");
+        return response.json()
+      })
       .then(result => console.log(result))
       .catch(error => {
-        swal("Something went wrong","", "error");
-        console.log('error', error)});
+        swal("Something went wrong", "", "error");
+        console.log('error', error)
+      });
   }
-    //   let x = document.getElementById('form');
-    //   const user = JSON.stringify(formJson(x));
 
-    //   console.log(user);
-
-    //   var myHeaders = new Headers();
-    //   myHeaders.append("Content-Type", "application/json");
-
-
-    //   var requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     body: user,
-    //     redirect: 'follow',
-    //     mode: 'no-cors',
-    //   };	
-
-    //   fetch("http://localhost:3001/user", requestOptions)
-    //     .then(response => response.text())
-    //     .then(result => console.log(result))
-    //     .catch(error => console.log('error', error));
-
-    // }
-
-    // function Fe(user) {
-
-    //   console.log(user);
-    //   fetch('http://localhost:3001/user', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: user,
-    //     mode: 'no-cors',
-    //   });
-    // }
-
-
-
-
-
-
-    //   fetch('http://localhost:3001/user', {
-    //     mode : 'no-cors',
-    //     method: 'POST',
-    //     headers: {
-    //       'content-type': 'application/json'
-    //     },
-    //     body: data,
-    //   }).then(res=>{
-
-    //   }).catch(e =>{
-
-    //   });
-    // }
-
-    return (
+  return (
+    <div className={classes.background}>
       <Grid container item xs={12} justify="center" className={classes.root} >
 
         <div
@@ -224,6 +171,7 @@ const SignUp = () => {
           </Paper>
         </div>
       </Grid>
-    );
-  }
-  export default SignUp;
+    </div>
+  );
+}
+export default SignUp;

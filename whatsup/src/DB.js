@@ -1,4 +1,10 @@
+const userModel = require('./Models/User').userModel;
+const messageModel = require('./Models/Message').messageModel;
+const groupModel = require('./Models/Group').groupModel;
+
+
 var MongoClient = require('mongodb').MongoClient;
+
 
 
 //Create a database named "WhatsApp":
@@ -30,40 +36,13 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
 });
 
-
-var userSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
-  password: String,
-  Groups: [groupModel]
-});
-
-var messageSchema = new mongoose.Schema({
-  Content: String,
-  Sender: userModel,
-  Receiver: [groupModel],
-  status: String,
-});
-
-var groupSchema = new mongoose.Schema({
-  Name: String,
-  Description: String,
-  Participants: [userModel],
-  Messages: [messageModel],
-});
-
-
-const userModel = mongoose.model('User', userSchema);
-const messageModel = mongoose.model('Message', messageSchema);
-const groupModel = mongoose.model('Group', groupSchema);
-
-
-
 const Express = require("express");
+var cors = require('cors')
 const BodyParser = require("body-parser");
 
 var app = Express();
+
+app.use(cors());
 
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
@@ -71,7 +50,7 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 app.post("/user", async (request, response) => {
   try {
-    response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+   // response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     var newUser = new userModel(request.body);
     console.log(newUser);
     var result = await newUser.save();
@@ -96,6 +75,43 @@ app.get("/user/:id", async (request, response) => {
     response.status(500).send(error);
   }
 });
+
+app.get("/user/:name", async (request, response) => {
+  try {
+    var user = await userModel.find((user) => {
+      if (user.firstName == request.params.name) {
+        return user;
+      }
+    });
+    response.send(user);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+app.get("/signed/user/:id", async (request, response) => {
+  try {
+    var user = await userModel.findById(request.params.id).exec();
+    response.send(user.Groups);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+app.get("/signed/user/:id/:groupid", async (request, response) => {
+  try {
+    var user = await userModel.findById(request.params.id).exec();
+    var currentGroup = user.Groups.find((group) => {
+      if (group.id == request.params.groupid)
+        return group;
+    })
+    response.send(currentGroup);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+
+
+
 //app.put("/men/:name", async (request, response) => { });
 
 
@@ -144,7 +160,7 @@ app.get("/user/:id", async (request, response) => {
 //   if (index > -1) {
 //     array.splice(index, 1);
 //     console.log(array);
-    
+
 //     return array;
 //   }
 // }

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ProminentAppBar() {
+const ProminentAppBar = () => {
     const classes = useStyles();
 
     return (
@@ -53,3 +53,5 @@ export default function ProminentAppBar() {
         </div>
     );
 }
+
+export default ProminentAppBar;

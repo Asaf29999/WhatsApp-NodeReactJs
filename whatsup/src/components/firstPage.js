@@ -1,7 +1,8 @@
 import React from 'react';
-import SignIn from './SignIn'
-import SignUp from './SignUp'
-import Appbar from './Appbar'
+import SignIn from './FirstPage/SignIn'
+import SignUp from './FirstPage/SignUp'
+import Appbar from './FirstPage/Appbar'
+import { makeStyles } from '@material-ui/core/styles';
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,15 +11,25 @@ import {
 
 
 
-function firstPage() {
+const useStyles = makeStyles((theme) => ({
+    root: {
+        minWidth: '100vw',
+        minhHeight: '100vh',
+        backgroundColor: '#D7DBD7'
+    }
+}));
+
+
+const FirstPage = () => {
+    const classes = useStyles();
+
     return (
-        <div>
-            <Appbar>
-            </Appbar>
+        <div className={classes.root} >
+            <Appbar />
             <Router>
                 <Switch>
-                    <Route exact path="/" > <SignIn /></Route>
-                    <Route path="/signup" > <SignUp /></Route>
+                    <Route exact path="/" component={SignIn} />
+                    <Route path="/signup" component={SignUp} />
                 </Switch>
             </Router>
         </div>
@@ -26,4 +37,4 @@ function firstPage() {
 }
 
 
-export default firstPage;
+export default FirstPage;

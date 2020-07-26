@@ -44,11 +44,18 @@ const useStyles = makeStyles((theme) => ({
  
 }));
 
-export default function SignIn() {
+const SignIn = () => {
+  const handleButton = (event) => {
+    event.preventDefault();
+
+  }
+
+
+
+
   const classes = useStyles();
 
   return (
-
     <Grid container item xs={12} justify="center" className={classes.root}>
 
       <div
@@ -57,7 +64,7 @@ export default function SignIn() {
           <Typography className={classes.Text} component="h1" variant="h2">
             Sign in
         </Typography>
-          <form className={classes.form} noValidate>
+          <form method="post" className={classes.form} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -85,11 +92,12 @@ export default function SignIn() {
               label ="Remember me"
             />
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="outlined"
               color="secondary"
               className={classes.submit}
+              onClick={handleButton}
             >
               Sign In
           </Button>
@@ -100,17 +108,13 @@ export default function SignIn() {
                   {"Don't have an account? Sign Up"}
                 </Link>
 
-
               </Grid>
             </Grid>
           </form>
           </Paper>
-          {/* <hr></hr>
-          <hr></hr>
-          <hr></hr>
-          <hr></hr>
-          <p className={classes.Text}> AJI </p> */}
         </div>
       </Grid>
   );
 }
+
+export default SignIn;

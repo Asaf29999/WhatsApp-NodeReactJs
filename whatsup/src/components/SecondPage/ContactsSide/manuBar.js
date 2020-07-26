@@ -17,6 +17,10 @@ export default function LongMenu() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  }; 
+  
+  const logOut = () => { 
+    document.location.replace('/');
   };
 
   return (
@@ -45,7 +49,7 @@ export default function LongMenu() {
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>New Message</MenuItem>
         <MenuItem onClick={handleClose}>New Group</MenuItem>
-        <MenuItem onClick={handleClose}>Log Out</MenuItem>
+        <MenuItem onClick={logOut}>Log Out</MenuItem>
       </Menu>
     </div>
   );
