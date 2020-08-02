@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import swal from 'sweetalert';
 import formJson from 'form-json';
+import AppBar from './Appbar';
+import useForm from './useForm';
+import validate from './LoginFormValidationRules';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,19 +58,30 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
 
   const classes = useStyles();
+  const history = useHistory();
+
+ // const [checked, setChecked] = useState(true);
+
+  const {
+    values,
+    errors,
+    handleChange,
+    handleSignUp
+  } = useForm( validate);
+
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    // var raw = JSON.stringify({ "firstName": "Asafi", "lastName": "Iluz", "email": "asaf29999@gmail.com", "password": "lkjklhg876" });
+    let form = document.getElementById('form');
+    const user = JSON.stringify(formJson(form));
 
-    let x = document.getElementById('form');
-    const user = JSON.stringify(formJson(x));
-
-    console.log(user);
+    // console.log(user);
 
     var requestOptions = {
       method: 'POST',
@@ -77,18 +92,21 @@ const SignUp = () => {
 
     fetch("http://localhost:3001/user", requestOptions)
       .then(response => {
-        swal("You have successfully registered!", "", "success");
+        swal("You have successfully registered!", "", "success").then(() => {
+          history.push("/signed/");
+        });
         return response.json()
       })
       .then(result => console.log(result))
       .catch(error => {
-        swal("Something went wrong", "", "error");
+        swal("Something went wrong", error, "error");
         console.log('error', error)
       });
   }
 
   return (
     <div className={classes.background}>
+      <AppBar />
       <Grid container item xs={12} justify="center" className={classes.root} >
 
         <div
@@ -97,10 +115,14 @@ const SignUp = () => {
             <Typography className={classes.Text} component="h1" variant="h2">
               Sign up
         </Typography>
-            <form id='form' className={classes.form} onSubmit={handleSubmit} noValidate>
-              <Grid container spacing={2}>
+            <form id='form' className={classes.form}
+              onSubmit={handleSubmit} noValidate>
+              <Grid container spacing={4}>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    helperText={errors.fname || ''}
+                    error={errors.fname}
+                    onChange={handleChange}
                     autoComplete="fname"
                     name="firstName"
                     variant="outlined"
@@ -113,7 +135,10 @@ const SignUp = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    helperText={errors.lname || ''}
                     variant="outlined"
+                    error={errors.lname}
+                    onChange={handleChange}
                     required
                     fullWidth
                     id="lastName"
@@ -124,9 +149,12 @@ const SignUp = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    onChange={handleChange}
+                    helperText={errors.email || ''}
+                    error = {errors.email}
+                    fullWidth
                     variant="outlined"
                     required
-                    fullWidth
                     id="email"
                     label="Email Address"
                     name="email"
@@ -135,9 +163,12 @@ const SignUp = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                  onChange={handleChange}
+                  helperText={errors.password || ''}
+                  error = {errors.password}
+                  fullWidth
                     variant="outlined"
                     required
-                    fullWidth
                     name="password"
                     label="Password"
                     type="password"
