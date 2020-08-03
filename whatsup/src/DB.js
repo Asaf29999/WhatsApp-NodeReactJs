@@ -76,13 +76,9 @@ app.get("/user/:id", async (request, response) => {
   }
 });
 
-app.get("/user/:name", async (request, response) => {
+app.get("/user/email/:email", async (request, response) => {
   try {
-    var user = await userModel.find((user) => {
-      if (user.firstName == request.params.name) {
-        return user;
-      }
-    });
+    var user = await userModel.find({email : request.params.email}).exec();
     response.send(user);
   } catch (error) {
     response.status(500).send(error);

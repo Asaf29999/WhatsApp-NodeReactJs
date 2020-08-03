@@ -60,14 +60,12 @@ const SignUp = () => {
   const classes = useStyles();
   const history = useHistory();
 
- // const [checked, setChecked] = useState(true);
-
   const {
     values,
     errors,
     handleChange,
     handleSignUp
-  } = useForm( validate);
+  } = useForm(validate);
 
   
 

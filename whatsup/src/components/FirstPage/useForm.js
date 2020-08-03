@@ -1,64 +1,67 @@
 import { useState } from 'react';
 import swal from 'sweetalert';
 import { useHistory } from "react-router-dom";
+import useFetch from './useFetch';
 
 
-const useForm = (callback, validate) => {
+
+const useForm = (validate) => {
 
   const history = useHistory();
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState("s");
-  const  [userExist, setUserExist] = useState("");
-
-  //const [isSubmitting, setIsSubmitting] = useState(false);
+ // const [userExist, setUserExist] = useState("");
 
 
-  
+  const { createAccount, userExist } = useFetch();
+
+
+
+
+
   const handleSignUp = (event) => {
     event.preventDefault();
-  
+
     // פה לבצע בדיקה מול הDB userExist
-     
+
     //setIsSubmitting(true);
-    if (Object.keys(errors).length === 0 && !userExist) {
+    if (Object.keys(errors).length === 0 && !userExist(values.email)) {
+      
+      createAccount();
       swal("You have successfully registered!", "", "success").then(() => {
         history.push("/signed/");
       });
     }
-    else{
+    else {
       swal("Something went wrong", "", "error");
-        console.log('error', errors)
+      console.log('error', errors)
     }
   };
 
 
   const handleLogin = (event) => {
     event.preventDefault();
-  
+
     // פה לבצע בדיקה מול הDB userExist
-     
-    //setIsSubmitting(true);
-    if (Object.keys(errors).length === 0 && !userExist) {
-      swal("You have successfully registered!", "", "success").then(() => {
+
+    if (Object.keys(errors).length === 0 && userExist(values.email)) {
+
+      swal("Welcome Back!", "", "success").then(() => {
         history.push("/signed/");
       });
     }
-    else{
+    else {
       swal("Something went wrong", "", "error");
-        console.log('error', errors)
+      console.log('error', errors)
     }
   };
-
-
-
-
 
 
   const handleChange = (event) => {
 
     event.persist();
     setValues(values => ({ ...values, [event.target.name]: event.target.value }));
-    setErrors(validate(values)); 
+    setErrors(validate(values));
   };
 
   return {
