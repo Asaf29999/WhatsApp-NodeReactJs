@@ -8,8 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-//import swal from 'sweetalert';
-//import formJson from 'form-json';
 import AppBar from './Appbar';
 import useForm from './useForm';
 import validate from './LoginFormValidationRules';
@@ -40,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#D7DBD7',
     alignItems: 'stretch',
     marginTop: theme.spacing(-16),
-
   },
   Text: {
     color: '#009688',
@@ -58,14 +55,11 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
 
   const classes = useStyles();
-  //const history = useHistory();
-
   const {
     errors,
     handleChange,
     handleSignUp
   } = useForm(validate);
-
 
   return (
     <div className={classes.background}>

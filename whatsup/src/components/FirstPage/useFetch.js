@@ -10,8 +10,7 @@ const useFetch = () => {
 
 
   const createAccount = () => {
-    //  event.preventDefault();
-
+  
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -66,22 +65,11 @@ const useFetch = () => {
 
 
 
-
-
-
-
-
   const emailExist = (email) => {
     return fetch(`http://localhost:3001/user/email/${email}`)
       .then(res => res.json())
       .then(data => data);
   };
-
-
-
-
-
-
 
 
   return {

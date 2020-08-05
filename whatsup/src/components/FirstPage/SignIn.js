@@ -118,7 +118,6 @@ const SignIn = () => {
                   <Link className={classes.Text} to="/signup" variant="body3">
                     {"Don't have an account? Sign Up"}
                   </Link>
-
                 </Grid>
               </Grid>
             </form>
