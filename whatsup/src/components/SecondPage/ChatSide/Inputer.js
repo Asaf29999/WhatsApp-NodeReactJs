@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import InputEmoji from 'react-input-emoji'
 
 export default function inputer () {

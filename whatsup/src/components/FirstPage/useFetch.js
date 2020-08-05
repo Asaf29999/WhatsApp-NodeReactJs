@@ -9,8 +9,8 @@ const useFetch = () => {
   const history = useHistory();
 
 
-  const createAccount = (event) => {
-    event.preventDefault();
+  const createAccount = () => {
+    //  event.preventDefault();
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -31,25 +31,63 @@ const useFetch = () => {
       .then(response => {
         return response.json()
       })
-      .then(result => console.log(result))
+      .then(result => {
+        swal("You have successfully registered!", "", "success").then(() => {
+          history.push("/signed/");
+        });
+      })
       .catch(error => {
-        swal("Something went wrong", error, "error");
+        swal("Something went wrong with the registertion", error, "error");
         console.log('error', error)
       });
   };
 
-  const userExist = (email) => {
-    fetch(`http://localhost:3001/user/${email}`)
-      .then(Response => Response.jason())
-      .then(data => {
-        console.log(data);
-        return data
-      })
+
+
+
+
+  const userExist = (email, password) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({ "email": email, "password": password });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+
+    };
+
+   return fetch("http://localhost:3001/user/login", requestOptions)
+     .then(res => res.json())
+     .then(data => data);
   };
+
+
+
+
+
+
+
+
+  const emailExist = (email) => {
+    return fetch(`http://localhost:3001/user/email/${email}`)
+      .then(res => res.json())
+      .then(data => data);
+  };
+
+
+
+
+
+
+
 
   return {
     createAccount,
-    userExist
+    userExist,
+    emailExist
   };
 
 

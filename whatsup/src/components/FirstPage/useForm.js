@@ -10,48 +10,60 @@ const useForm = (validate) => {
   const history = useHistory();
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState("s");
- // const [userExist, setUserExist] = useState("");
+ 
 
 
-  const { createAccount, userExist } = useFetch();
+  const { createAccount, userExist, emailExist } = useFetch();
 
 
 
 
 
-  const handleSignUp = (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
 
-    // פה לבצע בדיקה מול הDB userExist
-
-    //setIsSubmitting(true);
-    if (Object.keys(errors).length === 0 && !userExist(values.email)) {
-      
+    console.log(values.email);
+    const res = await emailExist(values.email);
+    const alreadyUser = Boolean(res[0]);
+   
+    console.log(res[0]);
+  
+    if (Object.keys(errors).length === 0 && !alreadyUser) {
       createAccount();
-      swal("You have successfully registered!", "", "success").then(() => {
-        history.push("/signed/");
-      });
+    }
+    else if (Object.keys(errors).length === 0 && alreadyUser) {
+      swal("There is already a registered account on this email", "", "error");
+      console.log('error', errors)
     }
     else {
-      swal("Something went wrong", "", "error");
+      swal("Proper data must be entered", "", "error");
       console.log('error', errors)
     }
   };
 
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
-    // פה לבצע בדיקה מול הDB userExist
+    console.log(values.email);
 
-    if (Object.keys(errors).length === 0 && userExist(values.email)) {
+    const verifyUser = (await userExist(values.email, values.password))[0];
+    
 
-      swal("Welcome Back!", "", "success").then(() => {
+    console.log(verifyUser);   
+  
+    if (Object.keys(errors).length === 2 && verifyUser) {
+
+      swal(`Welcome Back ${verifyUser.firstName} !`, "", "success").then(() => {
         history.push("/signed/");
       });
     }
+    else if (Object.keys(errors).length === 2 && !verifyUser) {
+      swal("This email does not match any account", "", "error");
+      console.log('error', errors)
+    }
     else {
-      swal("Something went wrong", "", "error");
+      swal("Proper data must be entered", "", "error");
       console.log('error', errors)
     }
   };

@@ -3,12 +3,11 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import swal from 'sweetalert';
 import Appbar from './Appbar'
 import useForm from './useForm';
 
@@ -51,26 +50,18 @@ const useStyles = makeStyles((theme) => ({
 
 const SignIn = () => {
 
-  const history = useHistory();
   const classes = useStyles();
 
   const {
     errors,
     handleChange,
     handleLogin,
-  } = useForm(login, validate);
-
-  function login() {
-    swal("You have successfully registered!", "", "success").then(() => {
-      history.push("/signed/");
-    });
-
-  }
+  } = useForm(validate);
 
   return (
     <div>
       <Appbar />
-      <Grid container item xs={12} justify="center"  className={classes.root}>
+      <Grid container item xs={12} justify="center" className={classes.root}>
 
         <div
           className={classes.paper}>
@@ -79,7 +70,7 @@ const SignIn = () => {
               Sign in
         </Typography>
             <form onSubmit={handleLogin} className={classes.form} noValidate>
-              
+
               <TextField
                 helperText={errors.email || ''}
                 error={errors.email}

@@ -50,7 +50,7 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 app.post("/user", async (request, response) => {
   try {
-   // response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  
     var newUser = new userModel(request.body);
     console.log(newUser);
     var result = await newUser.save();
@@ -76,9 +76,19 @@ app.get("/user/:id", async (request, response) => {
   }
 });
 
+app.post("/user/login", async (request, response) => {
+  try {
+    var user = await userModel
+    .find({ email: request.body.email, password: request.body.password }).exec();
+    response.send(user);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
 app.get("/user/email/:email", async (request, response) => {
   try {
-    var user = await userModel.find({email : request.params.email}).exec();
+    var user = await userModel
+    .find({ email : request.params.email}).exec();
     response.send(user);
   } catch (error) {
     response.status(500).send(error);
