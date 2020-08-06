@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: '2',
     width: '940px',
     borderRadius: '3px;',
-    boxShadow: '0 17px 50px 0 rgba(0,0,0,.19), 0 12px 15px 0 rgba(0,0,0,.24);',
+    boxShadow: '0 17px 50px 0 rgba(0,0,0,.19), 0 12px 15px 0 rgba(0,0,0,.10);',
   },
   form: {
     width: '50%',
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     backgroundColor: '#D7DBD7',
     alignItems: 'stretch',
-    marginTop: theme.spacing(-16),
+    marginTop: theme.spacing(-11.5),
 
 
   },
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = () => {
-
+  document.body.style.backgroundColor = "#D7DBD7"
   const classes = useStyles();
 
   const {

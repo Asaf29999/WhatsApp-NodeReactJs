@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: '2',
     width: '940px',
     borderRadius: '3px;',
-    boxShadow: '0 17px 50px 0 rgba(0,0,0,.19), 0 12px 15px 0 rgba(0,0,0,.24);',
+    boxShadow: '0 17px 50px 0 rgba(0,0,0,.19), 0 12px 15px 0 rgba(0,0,0,.10);',
   },
   form: {
     width: '50%',
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     backgroundColor: '#D7DBD7',
     alignItems: 'stretch',
-    marginTop: theme.spacing(-16),
+    marginTop: theme.spacing(-11.5),
   },
   Text: {
     color: '#009688',
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const SignUp = () => {
-
+  document.body.style.backgroundColor = "#D7DBD7"
   const classes = useStyles();
   const {
     errors,
@@ -62,7 +62,7 @@ const SignUp = () => {
   } = useForm(validate);
 
   return (
-    <div className={classes.background}>
+    <div className={classes.background} >
       <AppBar />
       <Grid container item xs={12} justify="center" className={classes.root} >
 

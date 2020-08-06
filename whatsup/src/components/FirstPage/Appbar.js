@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     toolbar: {
+       
         minHeight: 200,
         alignItems: 'flex-start',
         paddingTop: theme.spacing(1),
@@ -17,13 +18,15 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#00C2A9'
     },
     title: {
+        
         flexGrow: 1,
         alignSelf: 'flex-end',
     },
     Text: {
+        
         color: '#fff',
         fontFamily: 'Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;',
-        marginLeft: "1019px",
+        marginLeft: "69%",
         marginTop: "30px",
         display: 'inline-block;',
         fontSize: '13px;',
