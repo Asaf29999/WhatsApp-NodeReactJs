@@ -10,25 +10,25 @@ const useForm = (validate) => {
   const history = useHistory();
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState("s");
- 
-
 
   const { createAccount, userExist, emailExist } = useFetch();
-
-
-
-
 
   const handleSignUp = async (event) => {
     event.preventDefault();
 
     console.log(values.email);
-    const res = await emailExist(values.email);
-    const alreadyUser = Boolean(res[0]);
+    const user = await emailExist(values.email)[0];
+    const alreadyUser = Boolean(user);
    
-    console.log(res[0]);
+    console.log(user);
   
     if (Object.keys(errors).length === 0 && !alreadyUser) {
+      
+      store.dispatch({
+        type: 'LOG_IN',
+        user: user
+      })
+
       createAccount();
     }
     else if (Object.keys(errors).length === 0 && alreadyUser) {
@@ -53,6 +53,11 @@ const useForm = (validate) => {
     console.log(verifyUser);   
   
     if (Object.keys(errors).length === 2 && verifyUser) {
+      
+      store.dispatch({
+        type: 'LOG_IN',
+        user: verifyUser
+      })
 
       swal(`Welcome Back ${verifyUser.firstName} !`, "", "success").then(() => {
         history.push("/signed/");

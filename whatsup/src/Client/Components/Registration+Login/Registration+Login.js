@@ -1,7 +1,7 @@
 import React from 'react';
 import SignIn from './FirstPage/SignIn'
 import SignUp from './FirstPage/SignUp'
-import Secondpage from './secondPage'
+import Secondpage from '../HomePage/HomePage'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     BrowserRouter as Router,
