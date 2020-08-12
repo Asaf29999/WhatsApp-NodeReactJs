@@ -24,10 +24,10 @@ const useForm = (validate) => {
   
     if (Object.keys(errors).length === 0 && !alreadyUser) {
       
-      store.dispatch({
-        type: 'LOG_IN',
-        user: user
-      })
+      // store.dispatch({
+      //   type: 'LOG_IN',
+      //   user: user
+      // })
 
       createAccount();
     }
@@ -54,10 +54,10 @@ const useForm = (validate) => {
   
     if (Object.keys(errors).length === 2 && verifyUser) {
       
-      store.dispatch({
-        type: 'LOG_IN',
-        user: verifyUser
-      })
+      // store.dispatch({
+      //   type: 'LOG_IN',
+      //   user: verifyUser
+      // })
 
       swal(`Welcome Back ${verifyUser.firstName} !`, "", "success").then(() => {
         history.push("/signed/");

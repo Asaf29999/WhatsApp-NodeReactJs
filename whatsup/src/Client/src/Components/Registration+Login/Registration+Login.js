@@ -1,7 +1,7 @@
 import React from 'react';
-import SignIn from './FirstPage/SignIn'
-import SignUp from './FirstPage/SignUp'
-import Secondpage from '../HomePage/HomePage'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
+import HomePage from '../HomePage/HomePage'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     BrowserRouter as Router,
@@ -30,7 +30,7 @@ const FirstPage = () => {
                 <Switch>
                     <Route exact path="/" component={SignIn} />
                     <Route path="/signup" component={SignUp} />
-                    <Route exact path="/signed" component={Secondpage} />
+                    <Route exact path="/signed" component={HomePage} />
                 </Switch>
             </Router>
         </div>

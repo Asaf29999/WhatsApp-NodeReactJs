@@ -1,6 +1,5 @@
 import React from 'react';
-import Firstpage from './components/firstPage'
-import Secondpage from './components/secondPage'
+import RegiLogin from '../Components/Registration+Login/Registration+Login'
 import { makeStyles } from '@material-ui/core/styles';
 
 import './App.css';
@@ -31,8 +30,7 @@ function App() {
     <div  className={classes.background} >
       <Router>
         <Switch>
-          <Route exact path="/" > <Firstpage /></Route>
-          <Route exact path="/signed" > <Secondpage /></Route>
+          <Route exact path="/" > <RegiLogin /></Route>
         </Switch>
       </Router>
     </div>

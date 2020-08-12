@@ -1,7 +1,7 @@
 
-import ManuBar from './SecondPage/ContactsSide/manuBar';
-import SearchBar from './SecondPage/ContactsSide/searchBar';
-import Inputer from './SecondPage/ChatSide/Inputer'
+import ManuBar from './ContactsSide/manuBar';
+import SearchBar from './ContactsSide/searchBar';
+import Inputer from './ChatSide/Inputer'
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';

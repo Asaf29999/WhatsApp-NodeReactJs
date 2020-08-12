@@ -9,7 +9,7 @@ const BodyParser = require("body-parser");
 
 var app = Express();
 
-// app.use(cors()); 
+ app.use(cors()); 
 
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
