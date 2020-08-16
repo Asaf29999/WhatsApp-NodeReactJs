@@ -17,13 +17,11 @@ const useForm = (validate) => {
     event.preventDefault();
 
     console.log(values.email);
-    const user = await emailExist(values.email)[0];
+    const user = (await emailExist(values.email))[0];
     const alreadyUser = Boolean(user);
-   
-    console.log(user);
-  
+
     if (Object.keys(errors).length === 0 && !alreadyUser) {
-      
+
       // store.dispatch({
       //   type: 'LOG_IN',
       //   user: user
@@ -47,24 +45,31 @@ const useForm = (validate) => {
 
     console.log(values.email);
 
-    const verifyUser = (await userExist(values.email, values.password))[0];
-    
+    const user = (await emailExist(values.email))[0];
+    const alreadyUser = Boolean(user);
+    const HashPass = user ? user.password : null;
 
-    console.log(verifyUser);   
-  
-    if (Object.keys(errors).length === 2 && verifyUser) {
+    const verifyUser = (await userExist(values.email, values.password, HashPass));
+
+    console.log(verifyUser);
+
+    if (Object.keys(errors).length === 2 && alreadyUser) {
       
-      // store.dispatch({
-      //   type: 'LOG_IN',
-      //   user: verifyUser
-      // })
+      
+      if (verifyUser) {
+        swal(`Welcome Back ${user.firstName} !`, "", "success").then(() => {
+          history.push("/signed/");
+        });
+      }
+      else {
+        swal("Worng Password, Try Aagin ", "", "error");
+        console.log('error', errors)
 
-      swal(`Welcome Back ${verifyUser.firstName} !`, "", "success").then(() => {
-        history.push("/signed/");
-      });
+      }
+
     }
     else if (Object.keys(errors).length === 2 && !verifyUser) {
-      swal("This data does not match any account", "", "error");
+      swal("This email does not match any account", "", "error");
       console.log('error', errors)
     }
     else {

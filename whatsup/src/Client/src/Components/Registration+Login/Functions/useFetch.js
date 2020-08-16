@@ -1,6 +1,9 @@
 import formJson from 'form-json';
 import swal from 'sweetalert';
 import { useHistory } from "react-router-dom";
+import {encodePass} from "../Encryption/Encryption"
+var passwordHash = require('password-hash');
+
 
 
 
@@ -15,14 +18,16 @@ const useFetch = () => {
     myHeaders.append("Content-Type", "application/json");
 
     let form = document.getElementById('form');
-    const user = JSON.stringify(formJson(form));
-
-    // console.log(user);
+    const user = (formJson(form));
+   
+    console.log(user)
+    user.password = encodePass(user.password);
+   // console.log(encodeUserPass(user))
 
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: user,
+      body: JSON.stringify(user),
       redirect: 'follow',
     };
 
@@ -44,12 +49,12 @@ const useFetch = () => {
 
 
 
-
-  const userExist = (email, password) => {
+//לתקן את הפונקציה הזאת שתחזיר את המשתמש רק אם הסיסמאות תואמות 
+  const userExist = (email, password, HashPass) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({ "email": email, "password": password });
+    var raw = JSON.stringify({ "email": email, "password": encodePass(password)});
 
     var requestOptions = {
       method: 'POST',
@@ -58,9 +63,10 @@ const useFetch = () => {
 
     };
 
-   return fetch("http://localhost:3001/user/login", requestOptions)
+   return passwordHash.verify(password , HashPass) ? 
+   (fetch("http://localhost:3001/user/login", requestOptions)
      .then(res => res.json())
-     .then(data => data);
+     .then(data => data)) : null
   };
 
 
