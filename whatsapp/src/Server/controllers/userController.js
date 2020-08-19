@@ -1,11 +1,17 @@
-const userModel = require('../../Models/User').userModel;
+const userModel = require('../Models/User').userModel;
+const passwordHash = require('password-hash'); // Change
+const {encodeUserPass, encodePass} = require('../Encryption/Encryption')
 
 
 const postUser = async (request, response) => {
   try {
     var newUser = new userModel(request.body);
+    var encodedUser = encodeUserPass(newUser);
+   
     console.log(newUser);
-    var result = await newUser.save();
+    console.log(encodedUser);
+   
+    var result = await encodedUser.save();
     response.send(result);
   } catch (error) {
     console.log(error);
@@ -35,8 +41,14 @@ const getUserByID = async (request, response) => {
 
 const postUserByEmailAndPassword = async (request, response) => {
   try {
+
+    var encodedPassword = encodePass(request.body.password);
+    
+    console.log(request.body.password)
+    console.log(encodedPassword)
+
     var user = await userModel
-      .find({ email: request.body.email, password: request.body.password }).exec();
+      .find({ email: request.body.email, password: encodedPassword }).exec();
     response.send(user);
   } catch (error) {
     console.log(error);

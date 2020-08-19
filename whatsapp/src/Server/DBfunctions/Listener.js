@@ -1,6 +1,6 @@
-const User = require('./Modelsfunction/Userfunctions');
-const Group = require('./Modelsfunction/Groupfunction');
-const Message = require('./Modelsfunction/Messagefunction');
+const User = require('../controllers/userController');
+//const Group = require('./Modelsfunction/Groupfunction');
+//const Message = require('./Modelsfunction/Messagefunction');
 
 let user = [
     {

@@ -14,6 +14,7 @@ const url = process.env.URL;
 ConnectDB(url);
 
 const app = Express();
+var router = Express.Router()
 
 app.use(cors());
 app.use(BodyParser.json());

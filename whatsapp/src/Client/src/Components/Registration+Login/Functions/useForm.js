@@ -1,8 +1,10 @@
 import swal from 'sweetalert';
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
-
 import useFetch from './useFetch';
+
+const passwordHash = require('password-hash'); 
+
 
 const useForm = (validate) => {
 
@@ -45,7 +47,7 @@ const useForm = (validate) => {
    
     const HashPass = userByEmail ? userByEmail.password : null;
 
-    const verifyUser = (await getUserByEmailAndPass(values.email, values.password, HashPass));
+    const verifyUser = passwordHash.verify(values.password, HashPass);
 
     if (Object.keys(errors).length === 2 && userByEmail) {
       
@@ -59,7 +61,7 @@ const useForm = (validate) => {
         console.log('error', errors)
       }
     }
-    else if (Object.keys(errors).length === 2 && !verifyUser) {
+    else if (Object.keys(errors).length === 2 && !userByEmail) {
       swal("This email does not match any account", "", "error");
       console.log('error', errors)
     } else {
