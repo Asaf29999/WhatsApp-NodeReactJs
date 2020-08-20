@@ -12,7 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import AppBar from './Appbar';
 import useForm from './Functions/useForm';
-import validate from './Validation/ValidationRules';
+import {validateSignUp} from './Validation/ValidationRules';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
   const classes = useStyles();
   const {
-    errors,
-    handleChange,
+    signupErrors,
+    handleChangeSignUp,
     handleSignUp
-  } = useForm(validate);
+  } = useForm(validateSignUp);
 
   return (
     <div className={classes.background} >
@@ -75,9 +75,9 @@ const SignUp = () => {
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    helperText={errors.fname || ''}
-                    error={errors.fname}
-                    onChange={handleChange}
+                    helperText={signupErrors.fname || ''}
+                    error={signupErrors.fname}
+                    onChange={handleChangeSignUp}
                     autoComplete="fname"
                     name="firstName"
                     variant="outlined"
@@ -90,10 +90,10 @@ const SignUp = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    helperText={errors.lname || ''}
+                    helperText={signupErrors.lname || ''}
                     variant="outlined"
-                    error={errors.lname}
-                    onChange={handleChange}
+                    error={signupErrors.lname}
+                    onChange={handleChangeSignUp}
                     required
                     fullWidth
                     id="lastName"
@@ -104,9 +104,9 @@ const SignUp = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    onChange={handleChange}
-                    helperText={errors.email || ''}
-                    error={errors.email}
+                    helperText={signupErrors.email || ''}
+                    error={signupErrors.email}
+                    onChange={handleChangeSignUp}
                     fullWidth
                     variant="outlined"
                     required
@@ -118,9 +118,9 @@ const SignUp = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    onChange={handleChange}
-                    helperText={errors.password || ''}
-                    error={errors.password}
+                    helperText={signupErrors.password || ''}
+                    error={signupErrors.password}
+                    onChange={handleChangeSignUp}
                     fullWidth
                     variant="outlined"
                     required

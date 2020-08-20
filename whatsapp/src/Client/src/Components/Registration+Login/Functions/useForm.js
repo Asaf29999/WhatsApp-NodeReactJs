@@ -5,23 +5,25 @@ import useFetch from './useFetch';
 
 const passwordHash = require('password-hash'); 
 
-
 const useForm = (validate) => {
 
   const history = useHistory();
   const [values, setValues] = useState({});
-  const [errors, setErrors] = useState("s");
+  const [signupErrors, setSignuperrors] = useState([]);
+  const [loginErrors, setLoginerrors] = useState([]);
 
-  const { createAccount, getUserByEmailAndPass, getUserByEmail } = useFetch();
+  const { createAccount, getUserByEmail } = useFetch();
 
   const handleSignUp = async (event) => {
     event.preventDefault();
-
-    //console.log(values.email);
+  
+    console.log(signupErrors);
+    console.log(values);
+   
     const user = (await getUserByEmail(values.email))[0];
     const alreadyUser = Boolean(user);
 
-    if (Object.keys(errors).length === 0 && !alreadyUser) {
+    if (Object.keys(signupErrors).length === 0 && !values.email == null && !alreadyUser) {
 
       // store.dispatch({
       //   type: 'LOG_IN',
@@ -29,19 +31,20 @@ const useForm = (validate) => {
       // })
 
       createAccount(values);
-    } else if (Object.keys(errors).length === 0 && alreadyUser) {
+    } else if (Object.keys(signupErrors).length === 0  && alreadyUser) {
       swal("There is already a registered account on this email", "", "error");
-      console.log('error', errors)
+      console.log('error', signupErrors)
     } else {
       swal("Proper data must be entered", "", "error");
-      console.log('error', errors)
+      console.log('error', signupErrors)
     }
   };
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
-   // console.log(values.email);
+    console.log(loginErrors);
+    console.log(values);
 
     const userByEmail = (await getUserByEmail(values.email))[0];
    
@@ -49,7 +52,7 @@ const useForm = (validate) => {
 
     const verifyUser = passwordHash.verify(values.password, HashPass);
 
-    if (Object.keys(errors).length === 2 && userByEmail) {
+    if (Object.keys(loginErrors).length === 0 && !values.email == null && userByEmail) {
       
       if (verifyUser) {
         swal(`Welcome Back ${userByEmail.firstName} !`, "", "success").then(() => {
@@ -58,31 +61,40 @@ const useForm = (validate) => {
       }
       else {
         swal("Worng Password, Try Aagin ", "", "error");
-        console.log('error', errors)
+        console.log('error', loginErrors)
       }
     }
-    else if (Object.keys(errors).length === 2 && !userByEmail) {
+    else if (Object.keys(loginErrors).length === 0 && !userByEmail) {
       swal("This email does not match any account", "", "error");
-      console.log('error', errors)
+      console.log('error', loginErrors)
     } else {
       swal("Proper data must be entered", "", "error");
-      console.log('error', errors)
+      console.log('error', loginErrors)
     }
   };
 
-  const handleChange = (event) => {
+  const handleChangeSignUp = (event) => {
+
+    event.persist(); // What is that ???????????
+    setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+    setSignuperrors(validate(values));
+  };
+  
+  const handleChangeLogin = (event) => {
 
     event.persist(); // What is that  ???????????
     setValues(values => ({ ...values, [event.target.name]: event.target.value }));
-    setErrors(validate(values));
+    setLoginerrors(validate(values));
   };
 
   return {
-    handleChange,
+    handleChangeLogin,
+    handleChangeSignUp,
     handleLogin,
     handleSignUp,
     values,
-    errors,
+    loginErrors,
+    signupErrors,
   }
 };
 

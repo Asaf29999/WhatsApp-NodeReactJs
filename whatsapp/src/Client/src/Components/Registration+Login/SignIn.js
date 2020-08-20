@@ -12,7 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import AppBar from './Appbar'
 import useForm from './Functions/useForm';
-import validate from './Validation/ValidationRules';
+import {validateLogin} from './Validation/ValidationRules';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,10 +49,10 @@ const SignIn = () => {
   const classes = useStyles();
 
   const {
-    errors,
-    handleChange,
+    loginErrors,
+    handleChangeLogin,
     handleLogin,
-  } = useForm(validate);
+  } = useForm(validateLogin);
 
   return (
     <div>
@@ -67,9 +67,9 @@ const SignIn = () => {
             </Typography>
             <form onSubmit={handleLogin} className={classes.form} noValidate>
               <TextField
-                helperText={errors.email || ''}
-                error={errors.email}
-                onChange={handleChange}
+                helperText={loginErrors ? loginErrors.email : ''}
+                error={loginErrors ? loginErrors.email : false}
+                onChange={handleChangeLogin}
                 variant="outlined"
                 margin="normal"
                 required
@@ -81,9 +81,9 @@ const SignIn = () => {
                 autoFocus
               />
               <TextField
-                onChange={handleChange}
-                helperText={errors.password || ''}
-                error={errors.password}
+                onChange={handleChangeLogin}
+                helperText={loginErrors ? loginErrors.password : ''}
+                error={loginErrors ? loginErrors.password : false}
                 variant="outlined"
                 margin="normal"
                 required

@@ -64,7 +64,6 @@ const getUserByEmail = async (request, response) => {
   } catch (error) {
     console.log(error);
     response.status(500).send(error);
-
   }
 };
 
