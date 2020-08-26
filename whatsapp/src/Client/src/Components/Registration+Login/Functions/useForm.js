@@ -23,7 +23,7 @@ const useForm = (validate) => {
     const user = (await getUserByEmail(values.email))[0];
     const alreadyUser = Boolean(user);
 
-    if (Object.keys(signupErrors).length === 0 && !values.email == null && !alreadyUser) {
+    if (Object.keys(signupErrors).length === 0 && values.email !== undefined && !alreadyUser) {
 
       // store.dispatch({
       //   type: 'LOG_IN',
@@ -52,7 +52,7 @@ const useForm = (validate) => {
 
     const verifyUser = passwordHash.verify(values.password, HashPass);
 
-    if (Object.keys(loginErrors).length === 0 && !values.email == null && userByEmail) {
+    if (Object.keys(loginErrors).length === 0 && values.email !== null && userByEmail) {
       
       if (verifyUser) {
         swal(`Welcome Back ${userByEmail.firstName} !`, "", "success").then(() => {

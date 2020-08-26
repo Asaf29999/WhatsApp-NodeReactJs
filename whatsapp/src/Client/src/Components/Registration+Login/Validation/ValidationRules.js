@@ -17,9 +17,6 @@ function validateLogin(values) {
 
 function validateSignUp(values) {
   let errors = {};
-  console.log("validate :")
-  console.log(values.email == null);
-  console.log(errors);
  
     if (!values.email) {
       errors.email = 'Email address is required';
